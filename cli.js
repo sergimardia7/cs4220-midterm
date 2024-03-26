@@ -1,6 +1,6 @@
 import yargs from 'yargs/yargs';
 import { hideBin } from 'yargs/yargs'
-import { buildInfo } from './api';
+import { buildScores } from './api';
 
 yargs(hideBin(process.argv))
     .usage('$0: Usage <commands> [options]')
@@ -21,9 +21,9 @@ yargs(hideBin(process.argv))
         },
         (args) => {
             if(args.divisions === 'NBA'){
-                buildInfo(args);
+                buildScores(args);
             } else if(args.divisions === 'WNBA'){
-                buildInfo(args);
+                buildScores(args);
             }
         }
 

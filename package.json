@@ -3,6 +3,7 @@
     "@inquirer/prompts": "^4.3.0",
     "axios": "^1.6.8",
     "inquirer": "^9.2.16",
+    "node-fetch": "^3.3.2",
     "yargs": "^17.7.2"
   },
   "name": "package.json",
