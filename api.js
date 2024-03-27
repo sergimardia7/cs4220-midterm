@@ -1,44 +1,33 @@
+// The File to interact with the Basketball API
 import axios from 'axios';
 
 //Base for the API Call
 const base = 'http://site.api.espn.com/apis/site/v2/sports/basketball';
 
 //Pulls information based on user request
-export const buildScores = async (isNBA = true) => {
-    try{
+export const buildScores = async () => {
+    try {
         // Need to find a way to choose from NBA, WNBA, MNCAA, WNCAA
-        const series = isNBA ? 'NBA' : 'WNBA';
-        
-        //http://site.api.espn.com/apis/site/v2/sports/basketball/NBA/scoreboard
-        const scores = `${base}/${series}/scoreboard`;
-
+        //choice === true;
+        const scores = `${base}/nba/scoreboard`;
         const response = await axios.get(scores);
-
         return response.data;
 
-    }catch(error){
+        //http://site.api.espn.com/apis/site/v2/sports/basketball/NBA/scoreboard
+    } catch (error) {
         return error;
     }
 };
 
+// Searches thru NBA Stats
+export const teamSearch = async (teamName) => {
+    try {
+        const url = `${base}/nba/teams/${teamName}`;
 
-const fetch = require('node-fetch');
+        const response = await axios.get(url);
 
-// async function searchESPNAPI(keyword) {
-//     try {
-//         const apiUrl = `http://site.api.espn.com/apis/site/v2/sports/basketball?q=${encodeURIComponent(keyword)}`;
-//         const response = await fetch(apiUrl);
-
-//         if (!response.ok) {
-//             throw new Error('Failed to fetch data from ESPN API');
-//         }
-
-//         const data = await response.json();
-//         return data;
-//     } catch (error) {
-//         console.error('Error occurred while fetching data:', error);
-//         return null;
-//     }
-// }
-
-// module.exports = searchESPNAPI;
+        return response.data;
+    } catch (error) {
+        return error;
+    }
+};

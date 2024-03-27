@@ -1,31 +1,61 @@
 import yargs from 'yargs/yargs';
 import { hideBin } from 'yargs/yargs'
-import { buildScores } from './api';
+import { buildScores, teamSearch } from './api';
 
 yargs(hideBin(process.argv))
     .usage('$0: Usage <commands> [options]')
     .command(
-        'Choose Division: <divisions>',
-        'Choosing different divisions in Basketball',
+        // <> indicates the commands required
+        // Search Lakers Scores
+        'Search <team> Scores ',
+        'Select Stats or Scores',
+        
         (yargs) => {
             yargs
                 .positional(
-                    'divisions',
+                    'item',
                     {
-                        describe: 'name of the divions',
+                        describe: 'Choosing between Stats and Game Scores',
                         type: 'string',
-                        choices: ['NBA', 'WNBA']
+                        choices: ['scores', 'teams']
                     }
                 )
-                .options()
+                .options('cache', {
+                    alias: 'c',
+                    describe: 'Return cached results when available',
+                    default: false,
+                    type: 'boolean'
+                });
         },
-        (args) => {
-            if(args.divisions === 'NBA'){
-                buildScores(args);
-            } else if(args.divisions === 'WNBA'){
-                buildScores(args);
+        
+        (argv) => {
+            //const{item} = argv;
+
+            if (item === 'Stats'){
+                //Handle Stats Display
+                console.log("Displaying the Teams Stats");
+                teamSearch(argv);
+            } else if (item === 'scores'){
+                //Dispalys Team Scores
+                console.log("Displaying the Teams Scores")
+                buildScores(argv);
+            }else {
+                console.error("Invalid Selection. Please Select between Stats or Scores.")
             }
         }
 
+    )
+
+    .command(
+        'history',
+        'View search history',
+        () => {},
+       async () => {
+            try{
+                await handleHistory();
+            } catch (error) {
+                console.error('An error occured while retrieving search history: ', error);
+            }
+        }
     )
     .help().argv;
