@@ -32,9 +32,9 @@ const getTeamStats = async(team) => {
 
         const teamStats = await api.teamStats(team);
         
-        const teamRecord = teamStats.sports[0].leagues[0].teams;
+        const teamRecord = teamStats.sports[0].leagues[0].teams[0].record[0].items[0].stats[0];
 
-        console.log(teamRecord);
+        //console.log(teamRecord);
 
 
     }catch(error){
@@ -43,4 +43,5 @@ const getTeamStats = async(team) => {
 };
 
 //console.log(getScores('20240125'));
-console.log(getTeamStats('lal'));
+console.log(await api.teamStats('lal')/*.records.items[0]*/);
+//console.log(getTeamStats('lal'));

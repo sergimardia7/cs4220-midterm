@@ -21,7 +21,10 @@ export const teamStats = async(team) => {
 
         const response = await axios.get(teamStatics);
 
-        return response.data;
+        const wins = response.data.team.record.items[0].stats[18];
+        const loss = response.data.team.record.items[0].stats[9];
+
+        return wins;
     }catch(error){
         return error;
     }
