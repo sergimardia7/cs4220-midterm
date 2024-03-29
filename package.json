@@ -1,28 +1,18 @@
 {
-  "dependencies": {
-    "@inquirer/prompts": "^4.3.0",
-    "axios": "^1.6.8",
-    "inquirer": "^9.2.16",
-    "node-fetch": "^3.3.2",
-    "yargs": "^17.7.2"
-  },
   "name": "package.json",
   "version": "1.0.0",
-  "description": "JSON Package for Midterm - ESPN Basketball API",
+  "description": "",
   "main": "cli.js",
   "type": "module",
-  "parserOptions": {
-    "sourceType": "module",
-    "allowImportExportEverywhere": true
-  },
-  "devDependencies": {
-    "@typescript-eslint/eslint-plugin": "^7.2.0",
-    "@typescript-eslint/parser": "^7.2.0",
-    "eslint": "^8.57.0"
-  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "Sergio Maradiaga, Daniel Ontiveros, Daniel Melgarejo, Mason Price, Jesus Alcocer",
-  "license": "ISC"
+  "author": "Sergio Maradiaga",
+  "license": "ISC",
+  "dependencies": {
+    "@inquirer/prompts": "^4.3.0",
+    "axios": "^1.6.8",
+    "eslint": "^8.57.0",
+    "yargs": "^17.7.2"
+  }
 }
