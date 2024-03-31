@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { find } from './db.js';
 
 const base = 'http://site.api.espn.com/apis/site/v2/sports/basketball/nba';
 
@@ -96,6 +97,15 @@ export const printTeams = async () => {
     }
 
     console.log(abbreviations);
+};
+
+//Mason's getSearchHistory
+export const getSearchHistory = async () => {
+    try {
+        return await find('search_history');
+    } catch (error) {
+        throw new Error(`Error getting search history: ${error.message}`);
+    }
 };
 
 
