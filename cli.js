@@ -3,7 +3,10 @@ import { hideBin } from 'yargs/helpers';
 import { getScores } from './app.js';
 import { getSearchHistory } from './api.js';
 
-import input from '@inquirer/input';
+// had added this in order to display a message on command prompt but I don't like how 
+// it looks. 
+// Didn't update node_modules to run this module
+//import input from '@inquirer/input';
 
 
 
