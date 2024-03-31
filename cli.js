@@ -6,12 +6,12 @@ import { getSearchHistory } from './api.js';
 // had added this in order to display a message on command prompt but I don't like how 
 // it looks. 
 // Didn't update node_modules to run this module
-//import input from '@inquirer/input';
+import input from '@inquirer/input';
 
 
 
 
-
+const answer  = await input({message: 'Enter date in yyyyMMdd format: '});
 
 // Define command-line options
 yargs(hideBin(process.argv))
