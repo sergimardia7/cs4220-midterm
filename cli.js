@@ -7,11 +7,7 @@ import { getSearchHistory } from './api.js';
 // it looks. 
 // Didn't update node_modules to run this module
 import input from '@inquirer/input';
-
-
-
-
-const answer  = await input({message: 'Enter date in yyyyMMdd format: '});
+//const answer  = await input({message: 'Enter date in yyyyMMdd format: '});
 
 // Define command-line options
 yargs(hideBin(process.argv))
