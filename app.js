@@ -1,4 +1,5 @@
 import * as api from './api.js';
+import * as db from'./db.js';
 
 const test = await api.printScores('20240123','lal');
 //const test2 = await api.printTeams();
@@ -19,6 +20,9 @@ async function getScores(dates) {
                     const score = competitor.score;
                     console.log(`${team} : ${score}`);
                 });
+                // Only putting the first team's data on the search history file.
+                // Need to add only the team : score data for the searched date. 
+                db.create('search_history', competitors);
             });
         });
     } catch (error) {
@@ -41,6 +45,33 @@ const getTeamStats = async(team) => {
         return error;
     }
 };
+
+export const displaySearchHistory = async () => {
+    try {
+        const history = await api.getSearchHistory();
+        if (history && history.length > 0) {
+            console.log('Search History:');
+            history.forEach((item, index) => {
+                console.log(`${index + 1}. Keyword: ${item.keyword}, Date: ${item.date}`);
+            });
+        } else {
+            console.log('No search history available.');
+        }
+    } catch (error) {
+        console.error('Error displaying search history:', error.message);
+    }
+};
+
+export const previous= async () => {
+    // get all previously game scores based on the dates  in the search history
+    const getScores = await db.getScores('searched_dates');
+
+    //pop last game
+    const previousSarch = getScores.pop();
+};
+
+// Call the function to display search history
+//displaySearchHistory();
 
 //console.log(getScores('20240125'));
 console.log(await api.teamStats('lal')/*.records.items[0]*/);
