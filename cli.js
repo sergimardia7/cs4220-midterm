@@ -1,6 +1,6 @@
 import yargs from 'yargs';
 import { hideBin } from 'yargs/helpers';
-import { getScores } from './app.js';
+import { getScores, printOut } from './app.js';
 import { getSearchHistory } from './api.js';
 
 // had added this in order to display a message on command prompt but I don't like how 
@@ -32,7 +32,7 @@ yargs(hideBin(process.argv))
             const { date } = argv;
 
             // Pass the date to the app module
-            getScores(date);
+            printOut(date);
         }
     })
    

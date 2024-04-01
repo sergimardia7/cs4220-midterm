@@ -1,3 +1,4 @@
+//import { argv } from 'yargs';
 import * as api from './api.js';
 import * as db from'./db.js';
 
@@ -6,7 +7,7 @@ const test = await api.printScores('20240123','lal');
 //const test3 = await api.getScores();
 
 // Danny's Score Gathering Code
-async function getScores(dates) {
+export async function getScores(dates) {
     try {
         const scoreboardData = await api.buildScoreboard(dates);
         //'competitors' properties
@@ -74,5 +75,9 @@ export const previous= async () => {
 //displaySearchHistory();
 
 //console.log(getScores('20240125'));
-console.log(await api.teamStats('lal')/*.records.items[0]*/);
+//console.log(await api.teamStats('lal')/*.records.items[0]*/);
 //console.log(getTeamStats('lal'));
+
+export const printOut = async (argv) => {
+    getScores(argv);
+};
