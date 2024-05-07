@@ -2,9 +2,9 @@
 import * as api from './api.js';
 import * as db from'./db.js';
 
-const test = await api.printScores('20240123','lal');
-//const test2 = await api.printTeams();
-//const test3 = await api.getScores();
+// const test = await api.printScores('20240123','lal');
+// //const test2 = await api.printTeams();
+// //const test3 = await api.getScores();
 
 // Danny's Score Gathering Code
 export async function getScores(dates) {
@@ -32,15 +32,15 @@ export async function getScores(dates) {
 }
 
 
-const getTeamStats = async(team) => {
+export const getTeamStats = async(team) => {
     try{
 
         const teamStats = await api.teamStats(team);
         
         const teamRecord = teamStats.sports[0].leagues[0].teams[0].record[0].items[0].stats[0];
 
+        return teamRecord;
         //console.log(teamRecord);
-
 
     }catch(error){
         return error;

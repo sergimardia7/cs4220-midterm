@@ -19,74 +19,74 @@ Project Requirements
 
 package.json
 
-Contains necessary metadata for the project.
-Should include fields like name, version, author, contributors, description, dependencies, etc.
+    Contains necessary metadata for the project.
+    Should include fields like name, version, author, contributors, description, dependencies, etc.
  
 
 api.js
 
-Exports a function for searching the selected API by keyword and returns the response
-Exports a function for getting details from the selected API by a unique identifier and returns the response
+    Exports a function for searching the selected API by keyword and returns the response
+    Exports a function for getting details from the selected API by a unique identifier and returns the response
  
 
 cli.js
 
-Includes a help menu by typing: node cli.js --help
-Includes a search command to search based on your selected API using a keyword
-Command Structure: node cli.js search <keyword>
-Options: -c, --cache: Return cached results when available (default: false)
+    Includes a help menu by typing: node cli.js --help
+    Includes a search command to search based on your selected API using a keyword
+    Command Structure: node cli.js search <keyword>
+    Options: -c, --cache: Return cached results when available (default: false)
 
-Includes a history command to get history on previous searches.
-Command Structure: node cli.js history
-No additional arguments or options
+    Includes a history command to get history on previous searches.
+    Command Structure: node cli.js history
+    No additional arguments or options
  
 
 app.js
 
-Exports function to handle the logic for when a user searches by keyword.
-Searches the selected API by keyword
-Saves data in the mock database
-Reference search_history.json
-Prompts the user to select an item from the search results.
-Retrieves detailed data for the selected item based on the cache option
-IF cache option false (default)
-Gets the selected item by unique identifier from the your API
-Saves an entry in search_cache.json
-Reference: search_cache.json 
-IF cache option true
-Attempts to find the selected item in search_cache.json and return the item
-If not found in the search_cache.json - gets the selected item by unique identifier from the API
-Saves an entry in search_cache.json
-Reference: search_cache.json
-Displays the detailed data to the user in a user-friendly format.
-NO Array/Object or JSON print outs.
+    - Exports function to handle the logic for when a user searches by keyword.
+        - Searches the selected API by keyword
+        - Saves data in the mock database
+            - Reference search_history.json
+        - Prompts the user to select an item from the search results.
+        - Retrieves detailed data for the selected item based on the cache option
+            - IF cache option false (default)
+                - Gets the selected item by unique identifier from the your API
+                - Saves an entry in search_cache.json
+                    - Reference: search_cache.json 
+            - IF cache option true
+                - Attempts to find the selected item in search_cache.json and return the item
+                - If not found in the search_cache.json - gets the selected item by unique identifier from the API
+                - Saves an entry in search_cache.json
+                    - Reference: search_cache.json
+        - Displays the detailed data to the user in a user-friendly format.
+            - NO Array/Object or JSON print outs.
    
 
-Exports a function to handle logic for displaying the search history
-Retrieves the search history from the mock database
-Displays the history to the user in a user-friendly format
-Reference search_history.json
+    - Exports a function to handle logic for displaying the search history
+        - Retrieves the search history from the mock database
+        - Displays the history to the user in a user-friendly format
+            - Reference search_history.json
  
 
 db.js
 
-The exact db.js file from cards-cli-app-completed (Week 09)
+    - The exact db.js file from cards-cli-app-completed (Week 09)
  
 
 mock_database/search_history.json
 
-Inside your mock_database folder create the search_history.json
-This file should store previous search history
-Saved data should be in the form of an array of objects
-Each entry is an object that has the keys search whose value is the keyword and resultCount whose value is a count of results from the API
+    - Inside your mock_database folder create the search_history.json
+    - This file should store previous search history
+    - Saved data should be in the form of an array of objects
+        - Each entry is an object that has the keys search whose value is the keyword and resultCount whose value is a count of results from the API
  
 
 mock_database/search_cache.json
 
-Inside your mock_database folder create the search_cache.json
-This file should store cache version of the the item by unique identifier from the API
-Saved data should be in the form of an array of objects
-Each new entry represents the response body from the API for getting the selected item by unique identifier from the API
+    - Inside your mock_database folder create the search_cache.json
+    - This file should store cache version of the the item by unique identifier from the API
+    - Saved data should be in the form of an array of objects
+        - Each new entry represents the response body from the API for getting the selected item by unique identifier from the API
  
 
 Grading Criteria
@@ -128,3 +128,27 @@ Each member of the team MUST take the Team Evaluation Quiz
 This quiz is 10% of the Midterm Project Grade.
  Taking the quiz is mandatory, and failing to do so will result in a 0 for this portion. However, simply completing the quiz will automatically award the full 10% of the grade.
 This quiz is a feedback on your team members performance and contribution.
+
+
+
+TEAM: Sergio Maradiaga, Daniel Ontiveros, Mason Price, Danny Melgarejo, and Jesus Alcocer 
+API: SPORTS API 
+
+Overall, your team's effort in presenting the project was commendable. However, it's important to note that I encouraged teams to ask questions and schedule office hours appointments for assistance between the code video demo and the Midterm Q&A session. It seems that there were missed opportunities for support, which impacted the implementation with the specified requirements. As we move forward, I strongly encourage reaching out for assistance as needed. 
+
+Video: Great job on explaining your code and app! Each team member presented their code effectively, demonstrating a strong understanding of code written. 
+
+Code: Unfortunately, the current implementation falls short of meeting the Midterm requirements. While your team built a CLI, it doesn't fully align with the specifications outlined in the Midterm. For instance, the Midterm required a search function capable of accepting a keyword and incorporating cache options. While your "process-date" command accepts a date option that is being used as a "keyword" and overall its functionality deviates significantly from the requirements. 
+
+    cli.js/app.js: 
+        - The code should interact with the API to retrieve data associated with the provided keyword. 
+        - It should prompt the user to select an item from the list for more details. 
+        - Utilize the selected item's ID to retrieve more data from the API. 
+        - Additionally, integrating the cache option. 
+    
+    search_history.json: 
+        - Each entry should contain an object with the keys "search" (for the keyword) and "resultCount" (indicating the count of results from the API). 
+        - The current structure seems more suited for a "search_cache" rather than a search history, as it lacks storage for the keyword and result count. 
+    
+    search_cache.json: 
+        - The functionality is missing entirely.
