@@ -1,10 +1,24 @@
-//import { argv } from 'yargs';
+// the file for our application logic (aka logic to play 5 card poker)
+import { checkbox } from '@inquirer/prompts';
 import * as api from './api.js';
-import * as db from'./db.js';
+import * as db from './db.js';
 
 // const test = await api.printScores('20240123','lal');
 // //const test2 = await api.printTeams();
 // //const test3 = await api.getScores();
+
+const userChoices = [{name:'See Roster', value: 'Roster'}, {name: 'See Win Rate', value: 'winRate'}, {name: 'See Lose Rate', value: 'loseRate'}, {name: 'See Latest Scores', value: 'scores'}];
+
+const _choicePrompt = async () => {
+    return await checkbox({
+        message: 'Please Select what you wish to see: ',
+        choices: userChoices
+    });
+};
+
+const printIt = await _choicePrompt();
+
+console.log(printIt);
 
 // Danny's Score Gathering Code
 export async function getScores(dates) {
