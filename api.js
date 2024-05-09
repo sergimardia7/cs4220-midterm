@@ -1,48 +1,29 @@
+// the file to interact with the deck of cards api
 import axios from 'axios';
-import { find } from './db.js';
 
-const base = 'http://site.api.espn.com/apis/site/v2/sports/basketball/nba';
+const base = 'https://api.openbrewerydb.org/v1/breweries';
 
-// builds scoreboard by dates
-export const buildScoreboard = async(date) => {
-    try{
-        
-        const statsURL = `${base}/scoreboard?dates=${date}`;
+/** 
+ * @param {string} keyword - the keyword searched for
+ * @returns {Promise<Array>} - a promise resolving to the search results list
+*/
+export const searchByKeyword = async (keyword) => {
+    const brewURL = `${base}/search?query=${keyword}`;
+    const response = await axios.get(brewURL);
 
-        const response = await axios.get(statsURL);
-
-        return response.data;
-    }catch(error){
-        return error;
-    }
-};
-
-//Supposed to Return Team Stats by team
-export const teamStats = async(team) => {
-    try{
-        const teamStatics = `${base}/teams/${team}`;
-
-        const response = await axios.get(teamStatics);
-
-        const wins = response.data.team.record.items[0].stats[18];
-        const loss = response.data.team.record.items[0].stats[9];
-
-        return console.log(wins);
-    }catch(error){
-        return error;
-    }
-};
-
-//Mason's getSearchHistory
-export const getSearchHistory = async () => {
-    try {
-        return await find('search_history');
-    } catch (error) {
-        throw new Error(`Error getting search history: ${error.message}`);
-    }
+    return response.data;
 };
 
 
-//const team = 'LAL';
-//console.log(teamStats(team));
+/**
+ * 
+ * @param {String} breweryID - a unique ID of the breweries
+ * @returns {Promise<Array>} - a promise resolving to the details of the brewery
+ */
+export const getByIdentifier = async (breweryID) => {
+    const brewURL = `${base}/${breweryID}`;
+    const response = await axios.get(brewURL);
+
+    return response.data;
+};
 
