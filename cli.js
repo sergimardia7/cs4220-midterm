@@ -2,7 +2,7 @@
 import yargs from 'yargs';
 import { hideBin } from 'yargs/helpers';
 
-import { brewSearch, brewIDSearch } from './app.js';
+import { brewSearch, history } from './app.js';
 
 yargs(hideBin(process.argv))
     // $0 expands the file name
@@ -51,22 +51,11 @@ yargs(hideBin(process.argv))
         (args) => {
             brewIDSearch(args);
         }
-    )*/.command(
-        // command name with argument
+    )*/    .command(
         'history',
-        // description
-        'shows history of the searches',
-        // builder function to add a positional argument and option
-        (yargs) => {
-            yargs
-                .positional('history', {
-                    describe: 'Views Search History',
-                    type: 'string'
-                });
-        },
-        // handler function
-        (args) => {
-            brewIDSearch(args);
-        }
-    )
+        'View History Search',
+        () => {},
+        () => {
+            history();
+        })
     .help().argv;

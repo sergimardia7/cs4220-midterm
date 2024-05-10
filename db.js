@@ -1,111 +1,74 @@
-import  dotenv from 'dotenv';
-import { MongoClient } from 'mongodb';
+import fs from 'fs';
+import path from 'path';
+import url from 'url';
+
+// in ECMAScript Modules (ESM), __dirname is not available directly like in CommonJS
+// use 'url' and 'path' modules to achieve similar functionality
+const __filename = url.fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+// define the path to the mock database directory
+const dbDirectory = path.resolve(__dirname, 'mock_database');
 
 /**
- * ES6 module for interacting with MongoDB
- * @returns {Object} - Object containing functions to interact with MongoDB
+ * Reads and parses JSON data from a file
+ * @param {string} collection - the name of the collection file
+ * @returns {Promise<Array|Object>} the parsed JSON data from the collection
+ * @throws {Error} an error if there's an issue reading or parsing the data
  */
-const mongo = () => {
-    // Load the environment variables from the .env file
-    dotenv.config();
-
-    const { DB_USER, DB_PASSWORD, DB_HOST, DB_NAME } = process.env;
-    const mongoURL = `mongodb+srv://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/${DB_NAME}?retryWrites=true&w=majority&appName=Cluster0`;
-
-    let client;
-    let db;
-
-    /**
-     * Opens a connection to the MongoDB database
-     */
-    async function connect() {
-        try {
-            client = new MongoClient(mongoURL);
-            await client.connect();
-            db = client.db();
-
-            console.log('Opened connection to MongoDB');
-        } catch (err) {
-            console.error(err);
-        }
+const _read = async (collection) => {
+    try {
+        const fullPath = path.resolve(dbDirectory, `${collection}.json`);
+        const data = await fs.promises.readFile(fullPath, 'utf-8');
+        return JSON.parse(data);
+    } catch (error) {
+        throw new Error(
+            `Error reading data from collection ${collection}: ${error.message}`
+        );
     }
-
-    /**
-     * Closes the connection to the MongoDB database
-     */
-    async function close() {
-        try {
-            await client.close();
-
-            console.log('Closed connection to MongoDB');
-        } catch (err) {
-            console.error(err);
-        }
-    }
-
-    /**
-     * Creates a new document in the specified collection
-     * @param {string} TeamStatCheck - name of the collection
-     * @param {Object} data - data to be inserted into the collection
-     */
-    async function create(TeamStatCheck, data) {
-        try {
-            const StatCheck = db.collection(TeamStatCheck);
-            await StatCheck.insertOne(data);
-        } catch (err) {
-            console.error(err);
-        }
-    }
-
-    /**
-     * Finds documents in the specified collection
-     * @param {string} TeamStatCheck - name of the collection
-     * @param {string} Stats - identifier for filtering documents
-     * @returns {Promise<Document>} - a document or an array of ducments
-     */
-    async function find(TeamStatCheck, Stats) {
-        try {
-            const StatCheck = db.collection(TeamStatCheck);
-
-            if (Stats) {
-                return await StatCheck.find({ Stat: Stats }).next();
-            } else {
-                return await StatCheck
-                    .find({})
-                    .limit(10)
-                    .sort({ _id: -1 })
-                    .toArray();
-            }
-        } catch (err) {
-            console.error(err);
-        }
-    }
-    /**
-     * Updates documents in the specified collection
-     * @param {string} TeamStatCheck - name of the collection
-     * @param {string} Stats - identifier for filtering documents
-     * @param {Object} data - the data to be updated
-     */
-    async function update(TeamStatCheck, Stats, data) {
-        try {
-            const StatCheck = db.collection(TeamStatCheck);
-            await StatCheck.updateOne(
-                { Stat: Stats },
-                { $set: data }
-            );
-        } catch (err) {
-            console.error("There is an error", err);
-        }
-    }
-
-
-    return {
-        connect,
-        close,
-        create,
-        find,
-        update
-    };
 };
 
-export default mongo();
+/**
+ * Creates a new entry in a collection
+ * @param {string} collection - the name of the collection file
+ * @param {Object} data - the data to be added to the collection
+ * @returns {Promise<void>} a Promise that resolves when the operation is complete
+ * @throws {Error} an error if there's an issue creating the record
+ */
+export const create = async (collection, data) => {
+    try {
+        const records = await _read(collection);
+        records.push(data);
+
+        const fullPath = path.resolve(dbDirectory, `${collection}.json`);
+        await fs.promises.writeFile(fullPath, JSON.stringify(records));
+    } catch (error) {
+        throw new Error(
+            `Error creating record in collection ${collection}: ${error.message}`
+        );
+    }
+};
+
+/**
+ * Finds all records or a record by ID in a collection
+ * @param {string} collection - the name of the collection file
+ * @param {string|null} id - the id of the record to find. if null, all records will be returned
+ * @returns {Promise<Array|Object|null>} the record(s) found in the collection
+ * @throws {Error} an error if there's an issue finding the record(s)
+ */
+export const find = async (collection, id = null) => {
+    try {
+        const records = await _read(collection);
+
+        if (id) {
+            const record = records.find((record) => record.id === id);
+            return record;
+        } else {
+            return records;
+        }
+    } catch (error) {
+        throw new Error(
+            `Error finding record in collection ${collection}: ${error.message}`
+        );
+    }
+};

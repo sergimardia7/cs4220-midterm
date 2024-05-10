@@ -14,6 +14,19 @@ const _printConsole = async (brewsId) => {
     //console.log(brewery);
 };
 
+const _printHistory = async (brewsId) => {
+
+    const brewery = await api.getByIdentifier(brewsId);
+    
+    console.log(`Name: ${brewery.name}`);
+    console.log(`Type: ${brewery.brewery_type}`);
+    console.log(`Address: ${brewery.address_1}, ${brewery.state_province}, ${brewery.country} ${brewery.postal_code}`);
+    console.log(`Website: ${brewery.website_url}`);
+    console.log(`Phone: ${brewery.phone}`);
+    console.log('------------------------------------');
+
+};
+
 const _brewList = async (brews) => {
     const displayBrews = brews.map((brew) => {
         return {name: `${brew.name}`, value: brew.id};
@@ -49,24 +62,28 @@ export const brewSearch = async (args) => {
 
 };
 
-export const brewIDSearch = async (args) => {
-    try{
-        const brewery = await api.getByIdentifier(args.brewId);
+// export const brewIDSearch = async (args) => {
+//     try{
+//         const brewery = await api.getByIdentifier(args.brewId);
 
-        console.log(brewery);
+//         console.log(brewery);
 
-    }catch(err){
-        console.error(err);
-    }
-};
+//     }catch(err){
+//         console.error(err);
+//     }
+// };
 
 export const history = async () => {
     try{
         const historySearch = await db.find('search_history');
-        const previousSearch = historySearch.pop();
-        const brewery = await api.getByIdentifier(previousSearch);
+        let previousSearch;
+        //const brewery = await api.getByIdentifier(previousSearch);
+        historySearch.forEach((search) => {
+            previousSearch = historySearch.pop();
+            _printHistory(previousSearch);
+        });
 
-        console.log(brewery);
+        // _printConsole(previousSearch);
 
     }catch(err){
         console.log(err);
