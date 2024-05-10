@@ -7,7 +7,7 @@ const _printConsole = async (brewsId) => {
     const brewery = await api.getByIdentifier(brewsId);
     
     console.log(`Type: ${brewery.brewery_type}`);
-    console.log(`Address: ${brewery.address_1}, ${brewery.state_province}, ${brewery.country} ${brewery.postal_code}`);
+    console.log(`Address: ${brewery.address_1}, ${brewery.city}, ${brewery.state_province} ${brewery.country} ${brewery.postal_code}`);
     console.log(`Website: ${brewery.website_url}`);
     console.log(`Phone: ${brewery.phone}`);
 
@@ -19,10 +19,10 @@ const _printHistory = async (brewsId) => {
     const brewery = await api.getByIdentifier(brewsId);
     
     console.log(`Name: ${brewery.name}`);
-    console.log(`Type: ${brewery.brewery_type}`);
-    console.log(`Address: ${brewery.address_1}, ${brewery.state_province}, ${brewery.country} ${brewery.postal_code}`);
-    console.log(`Website: ${brewery.website_url}`);
-    console.log(`Phone: ${brewery.phone}`);
+    // console.log(`Type: ${brewery.brewery_type}`);
+    // console.log(`Address: ${brewery.address_1}, ${brewery.state_province}, ${brewery.country} ${brewery.postal_code}`);
+    // console.log(`Website: ${brewery.website_url}`);
+    // console.log(`Phone: ${brewery.phone}`);
     console.log('------------------------------------');
 
 };
